@@ -1,0 +1,1 @@
+<template>Countries view</template>
