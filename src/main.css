@@ -1,2 +1,10 @@
 @import "tailwindcss";
 @import 'tailwind-scrollbar-hide/v4';
+
+@theme {
+    --font-sans: "Nunito Sans", sans-serif;
+}
+
+body {
+    @apply font-sans;
+}
