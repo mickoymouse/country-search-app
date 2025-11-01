@@ -19,18 +19,24 @@ const state = reactive({
 });
 
 const regionFilter = ref(null);
+const countryNameFilter = ref("");
 const loadingCountries = ref(false);
 
 const viewCountryInformation = (country) => {
 	router.push(`/country/${country.name.common}`);
 };
 
-const fetchCountries = async (newRegion) => {
+const fetchCountries = async (newRegion, countryName) => {
 	try {
 		loadingCountries.value = true;
 		if (newRegion) {
 			const res = await fetch(
 				`https://restcountries.com/v3.1/region/${newRegion}?fields=name,cca2,capital,region,borders,flags,population`
+			);
+			state.countries = await res.json();
+		} else if (countryName) {
+			const res = await fetch(
+				`https://restcountries.com/v3.1/name/${countryName}?fields=name,cca2,capital,region,borders,flags,population`
 			);
 			state.countries = await res.json();
 		} else {
@@ -51,7 +57,7 @@ watch(regionFilter, async (newRegion) => {
 });
 
 onMounted(async () => {
-	fetchCountries(null);
+	fetchCountries();
 });
 </script>
 
@@ -61,6 +67,8 @@ onMounted(async () => {
 			<div class="flex items-center justify-between">
 				<div class="relative w-[480px]">
 					<Input
+						v-model="countryNameFilter"
+						@keyup.enter="fetchCountries(null, countryNameFilter)"
 						id="search"
 						type="text"
 						placeholder="Search for a country..."
