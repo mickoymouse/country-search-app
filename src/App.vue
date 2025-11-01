@@ -1,7 +1,12 @@
-<script setup></script>
+<script setup>
+import Navbar from "@/components/Navbar.vue";
+</script>
 
 <template>
-	<RouterView />
+	<div class="flex flex-col h-screen">
+		<Navbar />
+		<main class="flex-1 overflow-y-hidden" style="height: calc(100vh - 80px)">
+			<RouterView />
+		</main>
+	</div>
 </template>
-
-<style scoped></style>
