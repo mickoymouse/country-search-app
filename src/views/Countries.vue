@@ -63,7 +63,7 @@ onMounted(async () => {
 
 <template>
 	<div class="flex justify-center py-6 px-20 h-full">
-		<div class="h-full max-w-[1440px] flex flex-col gap-6">
+		<div class="h-full w-full max-w-[1440px] flex flex-col gap-6">
 			<div class="flex items-center justify-between">
 				<div class="relative w-[480px]">
 					<Input
