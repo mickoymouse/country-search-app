@@ -2,10 +2,15 @@
 import { onMounted, reactive } from "vue";
 
 import CountryCard from "@/components/CountryCard.vue";
+import { router } from "@/routes";
 
 const state = reactive({
 	countries: [],
 });
+
+const viewCountryInformation = (country) => {
+	router.push(`/country/${country.name.common}`);
+};
 
 onMounted(async () => {
 	const res = await fetch(
@@ -25,6 +30,8 @@ onMounted(async () => {
 			<div class="flex-1 overflow-auto scrollbar-hide">
 				<div class="flex flex-wrap gap-16">
 					<CountryCard
+						class="cursor-pointer"
+						@click="viewCountryInformation(country)"
 						v-for="country in state.countries"
 						:key="country.cca2"
 						:country="country"
