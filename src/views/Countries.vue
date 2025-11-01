@@ -1,5 +1,18 @@
 <script setup>
+import { onMounted, reactive } from "vue";
+
 import CountryCard from "@/components/CountryCard.vue";
+
+const state = reactive({
+	countries: [],
+});
+
+onMounted(async () => {
+	const res = await fetch(
+		"https://restcountries.com/v3.1/all?fields=name,cca2,capital,region,borders,flags,population"
+	);
+	state.countries = await res.json();
+});
 </script>
 
 <template>
@@ -10,19 +23,12 @@ import CountryCard from "@/components/CountryCard.vue";
 				<p>filter here</p>
 			</div>
 			<div class="flex-1 overflow-auto scrollbar-hide">
-				<div class="flex flex-wrap gap-20">
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
-					<CountryCard />
+				<div class="flex flex-wrap gap-16">
+					<CountryCard
+						v-for="country in state.countries"
+						:key="country.cca2"
+						:country="country"
+					/>
 				</div>
 			</div>
 		</div>
