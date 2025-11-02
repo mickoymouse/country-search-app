@@ -132,7 +132,7 @@ watch(() => route.params.name, fetchCountry, { immediate: true });
 						</p>
 					</div>
 				</div>
-				<div class="text-[16px] font-semibold flex flex-col">
+				<div class="text-[16px] font-semibold hidden md:flex md:flex-col">
 					<span class="mr-4">Border Countries:</span>
 					<p class="flex flex-wrap py-2">
 						<span
