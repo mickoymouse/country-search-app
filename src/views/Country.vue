@@ -61,6 +61,7 @@ watch(() => route.params.name, fetchCountry, { immediate: true });
 <template>
 	<div
 		class="flex flex-col w-full h-full overflow-auto scrollbar-hide mt-10 px-8 sm:mt-20 sm:px-20 gap-20"
+		tabindex="0"
 	>
 		<button
 			class="py-2 flex gap-2 h-10 w-[136px] shadow-md rounded-sm items-center justify-center cursor-pointer dark:bg-(--blue-900) dark:hover:bg-(--blue-950)"
