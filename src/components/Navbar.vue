@@ -17,6 +17,7 @@ const { isDarkMode, toggle } = useTheme();
 				Where in the world?
 			</h1>
 			<button
+				aria-label="Toggle dark mode"
 				class="text-[12px] sm:text-base font-semibold flex items-center gap-2 cursor-pointer"
 				@click="toggle"
 			>
