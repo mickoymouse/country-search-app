@@ -109,7 +109,7 @@ onMounted(async () => {
 			<div v-else-if="!loadingCountries && state.countries.length == 0">
 				<p>No countries found.</p>
 			</div>
-			<div v-else class="flex-1 overflow-auto scrollbar-hide">
+			<div v-else tabindex="0" class="flex-1 overflow-auto scrollbar-hide">
 				<div class="flex flex-wrap gap-16 justify-center sm:justify-start">
 					<CountryCard
 						class="cursor-pointer"
