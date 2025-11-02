@@ -61,7 +61,7 @@ watch(() => route.params.name, fetchCountry, { immediate: true });
 <template>
 	<div class="flex flex-col w-full h-full mt-20 px-20 gap-20">
 		<button
-			class="flex gap-2 h-10 w-[136px] shadow-md rounded-md items-center justify-center cursor-pointer"
+			class="flex gap-2 h-10 w-[136px] shadow-md rounded-md items-center justify-center cursor-pointer dark:bg-(--blue-900) dark:hover:bg-(--blue-950)"
 			@click="$router.back()"
 		>
 			<ArrowLeft /> Back
@@ -119,10 +119,10 @@ watch(() => route.params.name, fetchCountry, { immediate: true });
 					</div>
 				</div>
 				<p class="pt-20 text-[16px] font-semibold">
-					Border Countries:
+					<span class="mr-4">Border Countries:</span>
 					<span
 						v-for="bc in state.country.borderCountries"
-						class="text-[14px] font-light border w-24 py-1 rounded-sm shadow-sm inline-block text-center mr-2"
+						class="text-[14px] font-light border w-24 py-1 rounded-sm shadow-sm inline-block text-center mr-4"
 						>{{ bc }}</span
 					>
 				</p>

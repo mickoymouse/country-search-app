@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
 	<div
-		class="bg-white h-[336px] w-[264px] rounded-md shadow-md overflow-hidden"
+		class="bg-white dark:bg-(--blue-900) h-[336px] w-[264px] rounded-md shadow-md overflow-hidden"
 	>
 		<img
 			:src="`${props.country.flags.png}`"

@@ -7,7 +7,9 @@ const { isDarkMode, toggle } = useTheme();
 </script>
 
 <template>
-	<div class="h-20 min-h-20 bg-white shadow-md w-full flex justify-center">
+	<div
+		class="h-20 min-h-20 bg-white dark:bg-(--blue-900) shadow-md w-full flex justify-center"
+	>
 		<div
 			class="h-full w-full max-w-[1440px] flex items-center justify-between px-20"
 		>
