@@ -11,14 +11,13 @@ export function useTheme() {
 			isDarkMode.value = true;
 	};
 
-	const toggle = () => (isDarkMode.value = !isDarkMode.value);
+	setInitialTheme();
 
+	const toggle = () => (isDarkMode.value = !isDarkMode.value);
 	watchEffect(() => {
 		document.documentElement.classList.toggle("dark", isDarkMode.value);
 		localStorage.theme = isDarkMode.value ? "dark" : "light";
 	});
-
-	setInitialTheme();
 
 	return { isDarkMode, toggle };
 }
