@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 
 import CountryCard from "@/components/CountryCard.vue";
 import { router } from "@/routes";
@@ -14,52 +14,41 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 
-const state = reactive({
-	countries: [],
-});
+import { useCountries } from "@/composables/country";
+
+const {
+	state,
+	isLoading,
+	fetchAllCountries,
+	fetchCountriesByRegion,
+	fetchCountryByName,
+} = useCountries();
 
 const regionFilter = ref(null);
 const countryNameFilter = ref("");
-const loadingCountries = ref(true);
 
 const viewCountryInformation = (country) => {
 	router.push(`/country/${country.name.common}`);
 };
 
-const fetchCountries = async (newRegion, countryName) => {
-	try {
-		loadingCountries.value = true;
-		let url = "";
-		if (newRegion) {
-			url = `https://restcountries.com/v3.1/region/${newRegion}?fields=name,cca2,capital,region,borders,flags,population`;
-		} else if (countryName) {
-			url = `https://restcountries.com/v3.1/name/${countryName}?fields=name,cca2,capital,region,borders,flags,population`;
-		} else {
-			url = `https://restcountries.com/v3.1/all?fields=name,cca2,capital,region,borders,flags,population`;
-		}
-
-		const res = await fetch(url);
-
-		if (!res.ok) {
-			state.countries = [];
-			return;
-		}
-
-		state.countries = await res.json();
-	} catch (error) {
-		console.error("Error fetching countries:", error);
-		state.countries = [];
-	} finally {
-		loadingCountries.value = false;
+const searchCountry = (name) => {
+	regionFilter.value = null;
+	if (name.trim() === "") {
+		fetchAllCountries();
+	} else {
+		fetchCountryByName(name);
 	}
 };
 
 watch(regionFilter, async (newRegion) => {
-	fetchCountries(newRegion);
+	if (newRegion === null) {
+		return;
+	}
+	fetchCountriesByRegion(newRegion);
 });
 
 onMounted(async () => {
-	fetchCountries();
+	fetchAllCountries();
 });
 </script>
 
@@ -72,7 +61,7 @@ onMounted(async () => {
 				<div class="relative sm:w-[480px]">
 					<Input
 						v-model="countryNameFilter"
-						@keyup.enter="fetchCountries(null, countryNameFilter)"
+						@keyup.enter="searchCountry(countryNameFilter)"
 						id="search"
 						type="text"
 						placeholder="Search for a country..."
@@ -99,14 +88,14 @@ onMounted(async () => {
 					</SelectContent>
 				</Select>
 			</div>
-			<div v-if="loadingCountries">
+			<div v-if="isLoading">
 				<img
 					src="@/assets/undraw_around-the-world_vgcy.svg"
 					alt="loading svg"
 				/>
 				<p>Loading countries...</p>
 			</div>
-			<div v-else-if="!loadingCountries && state.countries.length == 0">
+			<div v-else-if="!isLoading && state.countries.length == 0">
 				<p>No countries found.</p>
 			</div>
 			<div v-else tabindex="0" class="flex-1 overflow-auto scrollbar-hide">

@@ -1,61 +1,17 @@
 <script setup>
-import { reactive, ref, watch } from "vue";
+import { watch } from "vue";
 import { useRoute } from "vue-router";
 import { ArrowLeft } from "lucide-vue-next";
 
-const state = reactive({
-	country: {},
-});
+import { useCountries } from "@/composables/country";
 
-const loadingCountry = ref(true);
+const { state, isLoading, fetchCountryInformation } = useCountries();
+
 const route = useRoute();
 
-const fetchCountry = async () => {
-	try {
-		loadingCountry.value = true;
-		const resCountry = await fetch(
-			`https://restcountries.com/v3.1/name/${route.params.name}?fields=name,cca2,capital,region,borders,flags,population,languages,currencies,subregion,tld`
-		);
-		const country = (await resCountry.json())[0];
-
-		state.country = {
-			name: country.name.common,
-			nativeName:
-				country.name.nativeName &&
-				Object.values(country.name.nativeName)[0].common,
-			population: country.population,
-			region: country.region,
-			capital: country.capital ? country.capital[0] : "N/A",
-			flags: country.flags,
-			languages: country.languages
-				? Object.values(country.languages).join(", ")
-				: "N/A",
-			currencies: country.currencies
-				? Object.values(country.currencies)
-						.map((c) => c.name)
-						.join(", ")
-				: "N/A",
-			subregion: country.subregion ? country.subregion : "N/A",
-			tld: country.tld ? country.tld.join(", ") : "N/A",
-		};
-
-		if (country.borders.length > 0) {
-			const resBorderCountries = await fetch(
-				`https://restcountries.com/v3.1/alpha?codes=${country.borders.join(
-					","
-				)}&fields=name`
-			);
-			const borderCountries = await resBorderCountries.json();
-			state.country.borderCountries = borderCountries.map((c) => c.name.common);
-		}
-	} catch (error) {
-		console.error("Error fetching countries:", error);
-	} finally {
-		loadingCountry.value = false;
-	}
-};
-
-watch(() => route.params.name, fetchCountry, { immediate: true });
+watch(() => route.params.name, fetchCountryInformation, {
+	immediate: true,
+});
 </script>
 
 <template>
@@ -70,7 +26,7 @@ watch(() => route.params.name, fetchCountry, { immediate: true });
 			<ArrowLeft /> Back
 		</button>
 
-		<div v-if="loadingCountry">
+		<div v-if="isLoading">
 			<img src="@/assets/undraw_around-the-world_vgcy.svg" alt="loading svg" />
 			<p>Loading country information...</p>
 		</div>
