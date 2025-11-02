@@ -17,10 +17,17 @@ const props = defineProps({
 			class="h-40 w-full object-cover"
 		/>
 		<div class="flex flex-col items-left p-8">
-			<p>{{ props.country.name.common }}</p>
-			<p>Population: {{ props.country.population }}</p>
-			<p>Region: {{ props.country.region }}</p>
-			<p>Capital: {{ props.country.capital[0] }}</p>
+			<p class="font-extrabold text-lg">{{ props.country.name.common }}</p>
+			<p class="text-sm font-semibold">
+				Population:
+				<span class="font-light">{{ props.country.population }}</span>
+			</p>
+			<p class="text-sm font-semibold">
+				Region: <span class="font-light">{{ props.country.region }}</span>
+			</p>
+			<p class="text-sm font-semibold">
+				Capital: <span class="font-light">{{ props.country.capital[0] }}</span>
+			</p>
 		</div>
 	</div>
 </template>

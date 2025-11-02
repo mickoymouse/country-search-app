@@ -12,7 +12,10 @@ const { isDarkMode, toggle } = useTheme();
 			class="h-full w-full max-w-[1440px] flex items-center justify-between px-20"
 		>
 			<p class="font-extrabold text-2xl">Where in the world?</p>
-			<button class="text-base flex gap-2 cursor-pointer" @click="toggle">
+			<button
+				class="text-base font-semibold flex gap-2 cursor-pointer"
+				@click="toggle"
+			>
 				<Sun v-if="isDarkMode" />
 				<Moon v-else />
 				{{ isDarkMode ? "Light Mode" : "Dark Mode" }}
