@@ -20,7 +20,9 @@ const props = defineProps({
 			<p class="font-extrabold text-lg">{{ props.country.name.common }}</p>
 			<p class="text-sm font-semibold">
 				Population:
-				<span class="font-light">{{ props.country.population }}</span>
+				<span class="font-light">{{
+					props.country.population.toLocaleString()
+				}}</span>
 			</p>
 			<p class="text-sm font-semibold">
 				Region: <span class="font-light">{{ props.country.region }}</span>

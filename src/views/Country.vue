@@ -92,7 +92,9 @@ watch(() => route.params.name, fetchCountry, { immediate: true });
 						</p>
 						<p class="text-[16px] font-semibold">
 							Population:
-							<span class="font-light">{{ state.country.population }}</span>
+							<span class="font-light">{{
+								state.country.population.toLocaleString()
+							}}</span>
 						</p>
 						<p class="text-[16px] font-semibold">
 							Region:
