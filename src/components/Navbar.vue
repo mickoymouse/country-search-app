@@ -1,7 +1,7 @@
 <script setup>
 import { Moon, Sun } from "lucide-vue-next";
 
-import { useTheme } from "@/theme";
+import { useTheme } from "@/composables/theme";
 
 const { isDarkMode, toggle } = useTheme();
 </script>
