@@ -29,24 +29,26 @@ const viewCountryInformation = (country) => {
 const fetchCountries = async (newRegion, countryName) => {
 	try {
 		loadingCountries.value = true;
+		let url = "";
 		if (newRegion) {
-			const res = await fetch(
-				`https://restcountries.com/v3.1/region/${newRegion}?fields=name,cca2,capital,region,borders,flags,population`
-			);
-			state.countries = await res.json();
+			url = `https://restcountries.com/v3.1/region/${newRegion}?fields=name,cca2,capital,region,borders,flags,population`;
 		} else if (countryName) {
-			const res = await fetch(
-				`https://restcountries.com/v3.1/name/${countryName}?fields=name,cca2,capital,region,borders,flags,population`
-			);
-			state.countries = await res.json();
+			url = `https://restcountries.com/v3.1/name/${countryName}?fields=name,cca2,capital,region,borders,flags,population`;
 		} else {
-			const res = await fetch(
-				"https://restcountries.com/v3.1/all?fields=name,cca2,capital,region,borders,flags,population"
-			);
-			state.countries = await res.json();
+			url = `https://restcountries.com/v3.1/all?fields=name,cca2,capital,region,borders,flags,population`;
 		}
+
+		const res = await fetch(url);
+
+		if (!res.ok) {
+			state.countries = [];
+			return;
+		}
+
+		state.countries = await res.json();
 	} catch (error) {
 		console.error("Error fetching countries:", error);
+		state.countries = [];
 	} finally {
 		loadingCountries.value = false;
 	}
@@ -101,6 +103,9 @@ onMounted(async () => {
 					alt="loading svg"
 				/>
 				<p>Loading countries...</p>
+			</div>
+			<div v-else-if="!loadingCountries && state.countries.length == 0">
+				<p>No countries found.</p>
 			</div>
 			<div v-else class="flex-1 overflow-auto scrollbar-hide">
 				<div class="flex flex-wrap gap-16">
