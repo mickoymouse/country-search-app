@@ -123,6 +123,7 @@ body {
 
     --blue-950: #202c36;
     --blue-900: #2b3844;
+    --grey-50: #FCFCFC;
 }
 
 @layer base {
