@@ -20,7 +20,7 @@ const state = reactive({
 
 const regionFilter = ref(null);
 const countryNameFilter = ref("");
-const loadingCountries = ref(false);
+const loadingCountries = ref(true);
 
 const viewCountryInformation = (country) => {
 	router.push(`/country/${country.name.common}`);
