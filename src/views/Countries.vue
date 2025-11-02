@@ -64,10 +64,12 @@ onMounted(async () => {
 </script>
 
 <template>
-	<div class="flex justify-center py-6 px-20 h-full">
+	<div class="flex justify-center py-6 px-6 sm:px-20 h-full">
 		<div class="h-full w-full max-w-[1440px] flex flex-col gap-6">
-			<div class="flex items-center justify-between">
-				<div class="relative w-[480px]">
+			<div
+				class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-8 sm:gap-2"
+			>
+				<div class="relative sm:w-[480px]">
 					<Input
 						v-model="countryNameFilter"
 						@keyup.enter="fetchCountries(null, countryNameFilter)"
@@ -83,7 +85,7 @@ onMounted(async () => {
 					</span>
 				</div>
 				<Select v-model="regionFilter">
-					<SelectTrigger class="w-[200px] min-w-[200px]">
+					<SelectTrigger class="w-full sm:w-[200px] sm:min-w-[200px]">
 						<SelectValue placeholder="Filter by region" />
 					</SelectTrigger>
 					<SelectContent>
@@ -108,7 +110,7 @@ onMounted(async () => {
 				<p>No countries found.</p>
 			</div>
 			<div v-else class="flex-1 overflow-auto scrollbar-hide">
-				<div class="flex flex-wrap gap-16">
+				<div class="flex flex-wrap gap-16 justify-center sm:justify-start">
 					<CountryCard
 						class="cursor-pointer"
 						@click="viewCountryInformation(country)"
